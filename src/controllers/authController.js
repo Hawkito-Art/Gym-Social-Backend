@@ -4,7 +4,7 @@ import User from '../models/User.js'
 
 export const register = async (req, res, next) => {
     try {
-        const { username, email, password, role } = req.body
+        const { username, email, password } = req.body
         const existingUser = await User.findOne({
                 where: { email }
         })
@@ -18,7 +18,7 @@ export const register = async (req, res, next) => {
             username,
             email,
             password: hashedPassword,
-            role: role || 'user'
+            role: 'user'
         })
         const token = jwt.sign(
             {
@@ -35,7 +35,6 @@ export const register = async (req, res, next) => {
             user: {
                 id: user.id,
                 username: user.username,
-                email: user.email,
                 role: user.role
             }
         })
@@ -69,7 +68,6 @@ export const login = async (req, res, next) => {
         user: {
             id: user.id,
             username: user.username,
-            email: user.email,
             role: user.role
         }
         })
