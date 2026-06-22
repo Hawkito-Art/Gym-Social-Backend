@@ -1,0 +1,26 @@
+### Variables
+@baseUrl = http://localhost:1234/api
+@token = {{login.response.body.token}}
+
+### 1. Registrar usuario
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+    "username": "arturoa",
+    "email": "arturo@test.com",
+    "password": "123456"
+}
+### 2. Iniciar sesión
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "arturo@test.com",
+    "password": "123456"
+}
+### 3. Perfil protegido (usa el token del login automáticamente)
+GET {{baseUrl}}/auth/me
+Authorization: Bearer {{token}}
+
