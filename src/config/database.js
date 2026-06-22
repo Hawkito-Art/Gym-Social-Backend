@@ -5,7 +5,9 @@ import { dirname, join } from "path"
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
-const dbPath = join(__dirname, "../../database.sqlite")
+const dbPath = process.env.NODE_ENV === 'test'
+    ? ':memory:'
+    : join(__dirname, '../../database.sqlite')
 
 export const sequelize = new Sequelize({
     dialect: "sqlite",

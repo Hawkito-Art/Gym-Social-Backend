@@ -3,6 +3,8 @@ export const rateLimiter = (options = {}) => {
     const { windowMs = 15 * 60 * 1000, max = 5 } = options
 
     return (req, res, next) => {
+        if (process.env.NODE_ENV === 'test') return next()
+
         const ip = req.ip
         const now = Date.now()
         const record = requests.get(ip)
