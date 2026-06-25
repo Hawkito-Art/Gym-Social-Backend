@@ -4,7 +4,7 @@ import app from '../src/app.js'
 
 describe('POST /api/auth/register', () => {
 
-    it('debería registrar un usuario con datos válidos', async () => {
+    it('Would register a user with valid data', async () => {
         const res = await request(app)
         .post('/api/auth/register')
         .send({ username: 'testuser', email: 'test@test.com', password: '123456' })
@@ -14,14 +14,14 @@ describe('POST /api/auth/register', () => {
         expect(res.body.user.role).toBe('user')
     })
 
-    it('debería rechazar email duplicado', async () => {
+    it('Would reject duplicate email', async () => {
         const res = await request(app)
         .post('/api/auth/register')
         .send({ username: 'otro', email: 'test@test.com', password: '123456' })
         expect(res.status).toBe(409)
     })
 
-    it('debería rechazar datos inválidos', async () => {
+    it('Would reject invalid data', async () => {
         const res = await request(app)
         .post('/api/auth/register')
         .send({ username: 'ab', email: 'malo', password: '12' })
@@ -32,7 +32,7 @@ describe('POST /api/auth/register', () => {
 
 describe('POST /api/auth/login', () => {
 
-    it('debería iniciar sesión con credenciales válidas', async () => {
+    it('Would login with valid credentials', async () => {
         const res = await request(app)
         .post('/api/auth/login')
         .send({ email: 'test@test.com', password: '123456' })
@@ -41,14 +41,14 @@ describe('POST /api/auth/login', () => {
         expect(res.body.user).not.toHaveProperty('email')
     })
 
-    it('debería rechazar credenciales inválidas', async () => {
+    it('Would reject invalid credentials', async () => {
         const res = await request(app)
         .post('/api/auth/login')
         .send({ email: 'test@test.com', password: 'wrong' })
         expect(res.status).toBe(401)
     })
 
-    it('debería rechazar email inexistente', async () => {
+    it('Would reject non-existent email', async () => {
         const res = await request(app)
         .post('/api/auth/login')
         .send({ email: 'noexiste@test.com', password: '123456' })
@@ -58,12 +58,12 @@ describe('POST /api/auth/login', () => {
     
 describe('GET /api/auth/me', () => {
 
-    it('debería rechazar sin token', async () => {
+    it('Would reject without token', async () => {
         const res = await request(app).get('/api/auth/me')
         expect(res.status).toBe(401)
     })
 
-    it('debería devolver el usuario con token válido', async () => {
+    it('Would return the user with a valid token', async () => {
         const loginRes = await request(app)
         .post('/api/auth/login')
         .send({ email: 'test@test.com', password: '123456' })
@@ -77,7 +77,7 @@ describe('GET /api/auth/me', () => {
         expect(res.body.user).not.toHaveProperty('exp')
     })
     
-    it('debería rechazar token inválido', async () => {
+    it('Would reject invalid token', async () => {
         const res = await request(app)
         .get('/api/auth/me')
         .set('Authorization', 'Bearer token-falso')
