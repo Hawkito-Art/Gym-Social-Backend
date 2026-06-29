@@ -1,6 +1,8 @@
 import {connectDB} from './config/database.js'
 import './models/User.js'
 import './models/Exercise.js'
+import './models/Routine.js'
+import './models/RoutineExercise.js'
 import './models/associations.js'
 import app from './app.js'
 
